@@ -28,8 +28,6 @@ if ( ! class_exists( 'ACF_REST_Bridge' ) ) {
 		private static $instance = null;
 
 		public static function init() {
-			add_action( 'init', array( __CLASS__, 'load_textdomain' ) );
-
 			if ( ! self::dependencies_met() ) {
 				add_action( 'admin_notices', array( __CLASS__, 'missing_dependencies_notice' ) );
 				return;
@@ -86,14 +84,6 @@ if ( ! class_exists( 'ACF_REST_Bridge' ) ) {
 
 			$controller = new ACF_REST_Bridge_Users_Controller();
 			$controller->register();
-		}
-
-		public static function load_textdomain() {
-			load_plugin_textdomain(
-				'acf-rest-bridge',
-				false,
-				dirname( plugin_basename( __FILE__ ) ) . '/languages'
-			);
 		}
 
 		public static function missing_dependencies_notice() {

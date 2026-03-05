@@ -1,6 +1,6 @@
 # ACF REST Bridge
 
-Securely expose Advanced Custom Fields in the WordPress REST API with proper access control.
+Expose ACF fields in the WordPress REST API with proper access control.
 
 Based on [ACF to REST API](https://github.com/airesvsg/acf-to-rest-api) by Aires Goncalves, rebuilt with security as a first-class concern.
 
