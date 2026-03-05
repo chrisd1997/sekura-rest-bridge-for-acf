@@ -2,7 +2,8 @@
 /**
  * Plugin Name: ACF REST Bridge
  * Description: Exposes Advanced Custom Fields in the WordPress REST API with proper access control.
- * Author: Chris
+ * Author: CW Dekker
+ * Author URI: https://cwdekker.com
  * Version: 1.0.0
  * Requires at least: 5.0
  * Requires PHP: 7.4
