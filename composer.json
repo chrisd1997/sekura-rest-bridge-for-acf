@@ -1,0 +1,23 @@
+{
+  "name": "cwdekker/acf-rest-bridge",
+  "description": "Securely expose Advanced Custom Fields in the WordPress REST API with proper access control.",
+  "type": "wordpress-plugin",
+  "version": "1.0.0",
+  "keywords": ["wordpress", "wp", "rest-api", "acf", "wp-api", "json", "wordpress-plugin", "fields"],
+  "homepage": "https://github.com/chrisd1997/acf-rest-bridge",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "CW Dekker",
+      "homepage": "https://cwdekker.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/chrisd1997/acf-rest-bridge/issues"
+  },
+  "require": {
+    "php": ">=7.4",
+    "composer/installers": "^1.0 || ^2.0"
+  }
+}
