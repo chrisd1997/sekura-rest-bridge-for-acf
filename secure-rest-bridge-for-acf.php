@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: ACF REST Bridge
+ * Plugin Name: Secure REST Bridge for ACF
  * Description: Exposes Advanced Custom Fields in the WordPress REST API with proper access control.
  * Author: CW Dekker
  * Author URI: https://cwdekker.com
@@ -9,7 +9,7 @@
  * Requires PHP: 7.4
  * License: GPLv3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: acf-rest-bridge
+ * Text Domain: secure-rest-bridge-for-acf
  *
  * Based on ACF to REST API by Aires Goncalves (GPLv2).
  */
@@ -18,12 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ACF_REST_BRIDGE_VERSION', '1.0.0' );
-define( 'ACF_REST_BRIDGE_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SECRBR_VERSION', '1.0.0' );
+define( 'SECRBR_PATH', plugin_dir_path( __FILE__ ) );
 
-if ( ! class_exists( 'ACF_REST_Bridge' ) ) {
+if ( ! class_exists( 'Secrbr' ) ) {
 
-	class ACF_REST_Bridge {
+	class Secrbr {
 
 		private static $instance = null;
 
@@ -42,15 +42,15 @@ if ( ! class_exists( 'ACF_REST_Bridge' ) ) {
 		}
 
 		private static function includes() {
-			require_once ACF_REST_BRIDGE_PATH . 'includes/class-acf-api.php';
-			require_once ACF_REST_BRIDGE_PATH . 'includes/class-field-settings.php';
-			require_once ACF_REST_BRIDGE_PATH . 'includes/endpoints/class-controller.php';
-			require_once ACF_REST_BRIDGE_PATH . 'includes/endpoints/class-posts-controller.php';
-			require_once ACF_REST_BRIDGE_PATH . 'includes/endpoints/class-terms-controller.php';
-			require_once ACF_REST_BRIDGE_PATH . 'includes/endpoints/class-comments-controller.php';
-			require_once ACF_REST_BRIDGE_PATH . 'includes/endpoints/class-attachments-controller.php';
-			require_once ACF_REST_BRIDGE_PATH . 'includes/endpoints/class-options-controller.php';
-			require_once ACF_REST_BRIDGE_PATH . 'includes/endpoints/class-users-controller.php';
+			require_once SECRBR_PATH . 'includes/class-acf-api.php';
+			require_once SECRBR_PATH . 'includes/class-field-settings.php';
+			require_once SECRBR_PATH . 'includes/endpoints/class-controller.php';
+			require_once SECRBR_PATH . 'includes/endpoints/class-posts-controller.php';
+			require_once SECRBR_PATH . 'includes/endpoints/class-terms-controller.php';
+			require_once SECRBR_PATH . 'includes/endpoints/class-comments-controller.php';
+			require_once SECRBR_PATH . 'includes/endpoints/class-attachments-controller.php';
+			require_once SECRBR_PATH . 'includes/endpoints/class-options-controller.php';
+			require_once SECRBR_PATH . 'includes/endpoints/class-users-controller.php';
 		}
 
 		private static function hooks() {
@@ -58,31 +58,31 @@ if ( ! class_exists( 'ACF_REST_Bridge' ) ) {
 			$hook = $acf_version >= '5.12' ? 'rest_pre_dispatch' : 'rest_api_init';
 
 			add_action( $hook, array( __CLASS__, 'create_rest_routes' ), 10 );
-			ACF_REST_Bridge_Field_Settings::hooks();
+			Secrbr_Field_Settings::hooks();
 		}
 
 		public static function create_rest_routes() {
 			foreach ( get_post_types( array( 'show_in_rest' => true ), 'objects' ) as $post_type ) {
 				if ( 'attachment' === $post_type->name ) {
-					$controller = new ACF_REST_Bridge_Attachments_Controller( $post_type );
+					$controller = new Secrbr_Attachments_Controller( $post_type );
 				} else {
-					$controller = new ACF_REST_Bridge_Posts_Controller( $post_type );
+					$controller = new Secrbr_Posts_Controller( $post_type );
 				}
 				$controller->register();
 			}
 
 			foreach ( get_taxonomies( array( 'show_in_rest' => true ), 'objects' ) as $taxonomy ) {
-				$controller = new ACF_REST_Bridge_Terms_Controller( $taxonomy );
+				$controller = new Secrbr_Terms_Controller( $taxonomy );
 				$controller->register();
 			}
 
-			$controller = new ACF_REST_Bridge_Comments_Controller();
+			$controller = new Secrbr_Comments_Controller();
 			$controller->register();
 
-			$controller = new ACF_REST_Bridge_Options_Controller();
+			$controller = new Secrbr_Options_Controller();
 			$controller->register();
 
-			$controller = new ACF_REST_Bridge_Users_Controller();
+			$controller = new Secrbr_Users_Controller();
 			$controller->register();
 		}
 
@@ -102,7 +102,7 @@ if ( ! class_exists( 'ACF_REST_Bridge' ) ) {
 					'<div class="notice notice-error"><p>%s</p></div>',
 					sprintf(
 						/* translators: %s: comma-separated list of missing plugins */
-						esc_html__( 'ACF REST Bridge requires the following plugins to be active: %s', 'acf-rest-bridge' ),
+						esc_html__( 'Secure REST Bridge for ACF requires the following plugins to be active: %s', 'secure-rest-bridge-for-acf' ),
 						esc_html( implode( ', ', $missing ) )
 					)
 				);
@@ -110,5 +110,5 @@ if ( ! class_exists( 'ACF_REST_Bridge' ) ) {
 		}
 	}
 
-	add_action( 'plugins_loaded', array( 'ACF_REST_Bridge', 'init' ) );
+	add_action( 'plugins_loaded', array( 'Secrbr', 'init' ) );
 }

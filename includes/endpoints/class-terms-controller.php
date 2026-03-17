@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'ACF_REST_Bridge_Terms_Controller' ) ) {
-	class ACF_REST_Bridge_Terms_Controller extends ACF_REST_Bridge_Controller {
+if ( ! class_exists( 'Secrbr_Terms_Controller' ) ) {
+	class Secrbr_Terms_Controller extends Secrbr_Controller {
 		public function __construct( $type ) {
 			$this->type      = $type->name;
 			$this->rest_base = ! empty( $type->rest_base ) ? $type->rest_base : $type->name;
@@ -33,7 +33,7 @@ if ( ! class_exists( 'ACF_REST_Bridge_Terms_Controller' ) ) {
 
 			return new WP_Error(
 				'rest_forbidden',
-				__( 'You do not have permission to access this resource.', 'acf-rest-bridge' ),
+				__( 'You do not have permission to access this resource.', 'secure-rest-bridge-for-acf' ),
 				array( 'status' => 403 )
 			);
 		}

@@ -1,4 +1,4 @@
-# ACF REST Bridge
+# Secure REST Bridge for ACF
 
 Expose ACF fields in the WordPress REST API with proper access control.
 
@@ -17,7 +17,7 @@ The original ACF to REST API plugin exposes all ACF field data to unauthenticate
 ## Installation
 
 1. Download or clone this repository into your `wp-content/plugins/` directory
-2. Activate **ACF REST Bridge** in the WordPress admin
+2. Activate **Secure REST Bridge for ACF** in the WordPress admin
 
 ## Endpoints
 
@@ -58,19 +58,19 @@ Each ACF field has **Show in REST API?** and **Edit in REST API?** toggles in th
 
 | Filter | Description | Default |
 |--------|-------------|---------|
-| `acf_rest_bridge/item_permissions/get` | Override read permission for a single item | Varies by type |
-| `acf_rest_bridge/items_permissions/get` | Override read permission for collections | Varies by type |
-| `acf_rest_bridge/item_permissions/update` | Override write permission | `current_user_can(...)` |
-| `acf_rest_bridge/key` | Change the request parameter key for field data | `'fields'` |
-| `acf_rest_bridge/id` | Modify the ACF post ID used for field lookups | Varies |
-| `acf_rest_bridge/{type}/get_fields` | Filter returned field data | — |
-| `acf_rest_bridge/{type}/get_items` | Filter collection responses | — |
-| `acf_rest_bridge/{type}/prepare_item` | Filter data before database write | — |
+| `secrbr/item_permissions/get` | Override read permission for a single item | Varies by type |
+| `secrbr/items_permissions/get` | Override read permission for collections | Varies by type |
+| `secrbr/item_permissions/update` | Override write permission | `current_user_can(...)` |
+| `secrbr/key` | Change the request parameter key for field data | `'fields'` |
+| `secrbr/id` | Modify the ACF post ID used for field lookups | Varies |
+| `secrbr/{type}/get_fields` | Filter returned field data | — |
+| `secrbr/{type}/get_items` | Filter collection responses | — |
+| `secrbr/{type}/prepare_item` | Filter data before database write | — |
 
 ### Example: Make options readable by editors
 
 ```php
-add_filter( 'acf_rest_bridge/item_permissions/get', function( $permitted, $request, $type ) {
+add_filter( 'secrbr/item_permissions/get', function( $permitted, $request, $type ) {
     if ( 'option' === $type && current_user_can( 'edit_others_posts' ) ) {
         return true;
     }

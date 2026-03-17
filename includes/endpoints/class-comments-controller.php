@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'ACF_REST_Bridge_Comments_Controller' ) ) {
-	class ACF_REST_Bridge_Comments_Controller extends ACF_REST_Bridge_Controller {
+if ( ! class_exists( 'Secrbr_Comments_Controller' ) ) {
+	class Secrbr_Comments_Controller extends Secrbr_Controller {
 		public function __construct() {
 			$this->type      = 'comment';
 			$this->rest_base = 'comments';
@@ -31,7 +31,7 @@ if ( ! class_exists( 'ACF_REST_Bridge_Comments_Controller' ) ) {
 			if ( ! $comment ) {
 				return new WP_Error(
 					'rest_comment_not_found',
-					__( 'Comment not found.', 'acf-rest-bridge' ),
+					__( 'Comment not found.', 'secure-rest-bridge-for-acf' ),
 					array( 'status' => 404 )
 				);
 			}
@@ -46,7 +46,7 @@ if ( ! class_exists( 'ACF_REST_Bridge_Comments_Controller' ) ) {
 
 			return new WP_Error(
 				'rest_forbidden',
-				__( 'You do not have permission to access this resource.', 'acf-rest-bridge' ),
+				__( 'You do not have permission to access this resource.', 'secure-rest-bridge-for-acf' ),
 				array( 'status' => 403 )
 			);
 		}

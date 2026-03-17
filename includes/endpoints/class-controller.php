@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'ACF_REST_Bridge_Controller' ) ) {
-	class ACF_REST_Bridge_Controller extends WP_REST_Controller {
+if ( ! class_exists( 'Secrbr_Controller' ) ) {
+	class Secrbr_Controller extends WP_REST_Controller {
 		protected $acf        = null;
 		protected $type       = null;
 		protected $controller = null;
@@ -18,7 +18,7 @@ if ( ! class_exists( 'ACF_REST_Bridge_Controller' ) ) {
 
 		public function __construct( $type = null ) {
 			$this->namespace = 'acf/v3';
-			$this->acf       = new ACF_REST_Bridge_ACF_API( $this->type, get_class( $this ) );
+			$this->acf       = new Secrbr_ACF_API( $this->type, get_class( $this ) );
 		}
 
 		public function register_hooks() {
@@ -55,7 +55,7 @@ if ( ! class_exists( 'ACF_REST_Bridge_Controller' ) ) {
 			register_rest_field( $this->type, 'acf', array(
 				'get_callback' => array( $this, 'register_field_callback' ),
 				'schema'       => array(
-					'description' => __( 'Advanced Custom Fields data.', 'acf-rest-bridge' ),
+					'description' => __( 'Advanced Custom Fields data.', 'secure-rest-bridge-for-acf' ),
 					'type'        => 'object',
 				),
 			) );
@@ -85,12 +85,12 @@ if ( ! class_exists( 'ACF_REST_Bridge_Controller' ) ) {
 		 */
 		public function get_item_permissions_check( $request ) {
 			$permitted = $this->check_read_permission( $request );
-			return apply_filters( 'acf_rest_bridge/item_permissions/get', $permitted, $request, $this->type );
+			return apply_filters( 'secrbr/item_permissions/get', $permitted, $request, $this->type );
 		}
 
 		public function get_items( $request ) {
 			if ( ! method_exists( $this->controller, 'get_items' ) ) {
-				return new WP_Error( 'cant_get_items', __( 'Cannot get items', 'acf-rest-bridge' ), array( 'status' => 500 ) );
+				return new WP_Error( 'cant_get_items', __( 'Cannot get items', 'secure-rest-bridge-for-acf' ), array( 'status' => 500 ) );
 			}
 
 			$this->set_default_parameters( $request );
@@ -108,16 +108,16 @@ if ( ! class_exists( 'ACF_REST_Bridge_Controller' ) ) {
 				}
 			}
 
-			return apply_filters( 'acf_rest_bridge/' . $this->type . '/get_items', rest_ensure_response( $response ), rest_ensure_request( $request ) );
+			return apply_filters( 'secrbr/' . $this->type . '/get_items', rest_ensure_response( $response ), rest_ensure_request( $request ) );
 		}
 
 		public function get_items_permissions_check( $request ) {
 			$permitted = $this->check_read_permission( $request );
-			return apply_filters( 'acf_rest_bridge/items_permissions/get', $permitted, $request, $this->type );
+			return apply_filters( 'secrbr/items_permissions/get', $permitted, $request, $this->type );
 		}
 
 		public function update_item_permissions_check( $request ) {
-			return apply_filters( 'acf_rest_bridge/item_permissions/update', current_user_can( 'edit_posts' ), $request, $this->type );
+			return apply_filters( 'secrbr/item_permissions/update', current_user_can( 'edit_posts' ), $request, $this->type );
 		}
 
 		public function update_item( $request ) {
@@ -142,7 +142,7 @@ if ( ! class_exists( 'ACF_REST_Bridge_Controller' ) ) {
 				return new WP_REST_Response( $this->acf->get_fields( $request ), 200 );
 			}
 
-			return new WP_Error( 'cant_update_item', __( 'Cannot update item', 'acf-rest-bridge' ), array( 'status' => 500 ) );
+			return new WP_Error( 'cant_update_item', __( 'Cannot update item', 'secure-rest-bridge-for-acf' ), array( 'status' => 500 ) );
 		}
 
 		public function rest_insert( $object, $request, $creating ) {
@@ -160,7 +160,7 @@ if ( ! class_exists( 'ACF_REST_Bridge_Controller' ) ) {
 		public function prepare_item_for_database( $request ) {
 			$item = false;
 			if ( $request instanceof WP_REST_Request ) {
-				$key = apply_filters( 'acf_rest_bridge/key', 'fields', $request, $this->type );
+				$key = apply_filters( 'secrbr/key', 'fields', $request, $this->type );
 				if ( is_string( $key ) && ! empty( $key ) ) {
 					$data  = $request->get_param( $key );
 					$field = $request->get_param( 'field' );
@@ -180,7 +180,7 @@ if ( ! class_exists( 'ACF_REST_Bridge_Controller' ) ) {
 					}
 				}
 			}
-			return apply_filters( 'acf_rest_bridge/' . $this->type . '/prepare_item', $item, $request );
+			return apply_filters( 'secrbr/' . $this->type . '/prepare_item', $item, $request );
 		}
 
 		/**
@@ -201,7 +201,7 @@ if ( ! class_exists( 'ACF_REST_Bridge_Controller' ) ) {
 			if ( ! $post ) {
 				return new WP_Error(
 					'rest_post_not_found',
-					__( 'Post not found.', 'acf-rest-bridge' ),
+					__( 'Post not found.', 'secure-rest-bridge-for-acf' ),
 					array( 'status' => 404 )
 				);
 			}
@@ -217,7 +217,7 @@ if ( ! class_exists( 'ACF_REST_Bridge_Controller' ) ) {
 
 			return new WP_Error(
 				'rest_forbidden',
-				__( 'You do not have permission to access this resource.', 'acf-rest-bridge' ),
+				__( 'You do not have permission to access this resource.', 'secure-rest-bridge-for-acf' ),
 				array( 'status' => 403 )
 			);
 		}
