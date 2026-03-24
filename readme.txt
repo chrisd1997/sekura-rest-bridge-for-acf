@@ -1,5 +1,6 @@
 === Sekura REST Bridge for ACF ===
 Contributors: cwdekker
+Donate link: https://github.com/chrisd1997/sekura-rest-bridge-for-acf
 Tags: acf, rest-api, custom-fields, json, wp-api
 Requires at least: 5.0
 Tested up to: 6.9
@@ -50,6 +51,12 @@ Yes. Sekura REST Bridge for ACF works alongside ACF Pro's native REST support an
 = Is this a drop-in replacement for ACF to REST API? =
 
 Yes. It uses the same `acf/v3` namespace and `acf` response key. Deactivate the old plugin and activate this one.
+
+== Contributing ==
+
+Development happens on GitHub: [github.com/chrisd1997/sekura-rest-bridge-for-acf](https://github.com/chrisd1997/sekura-rest-bridge-for-acf)
+
+Bug reports, feature requests, and pull requests are welcome.
 
 == Changelog ==
 
