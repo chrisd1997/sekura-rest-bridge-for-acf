@@ -117,7 +117,13 @@ if ( ! class_exists( 'Sekura_Controller' ) ) {
 		}
 
 		public function update_item_permissions_check( $request ) {
-			return apply_filters( 'sekura/item_permissions/update', current_user_can( 'edit_posts' ), $request, $this->type );
+			$id = absint( $request->get_param( 'id' ) );
+			if ( $id ) {
+				$permitted = current_user_can( 'edit_post', $id );
+			} else {
+				$permitted = current_user_can( 'edit_posts' );
+			}
+			return apply_filters( 'sekura/item_permissions/update', $permitted, $request, $this->type );
 		}
 
 		public function update_item( $request ) {
@@ -192,9 +198,13 @@ if ( ! class_exists( 'Sekura_Controller' ) ) {
 		protected function check_read_permission( $request ) {
 			$id = absint( $request->get_param( 'id' ) );
 
-			// Collection endpoint with no specific ID — allow for public types.
+			// Collection endpoint with no specific ID — allow only for public post types.
 			if ( ! $id ) {
-				return true;
+				$post_type_obj = get_post_type_object( $this->type );
+				if ( $post_type_obj && $post_type_obj->show_in_rest ) {
+					return true;
+				}
+				return false;
 			}
 
 			$post = get_post( $id );

@@ -17,6 +17,12 @@ if ( ! class_exists( 'Sekura_Terms_Controller' ) ) {
 			return parent::get_items( $request );
 		}
 
+		public function update_item_permissions_check( $request ) {
+			$taxonomy  = get_taxonomy( $this->type );
+			$permitted = $taxonomy && current_user_can( $taxonomy->cap->edit_terms );
+			return apply_filters( 'sekura/item_permissions/update', $permitted, $request, $this->type );
+		}
+
 		/**
 		 * Terms in public taxonomies are generally public.
 		 * Only restrict if the taxonomy itself is not public.

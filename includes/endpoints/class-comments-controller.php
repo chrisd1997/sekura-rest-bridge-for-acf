@@ -17,6 +17,11 @@ if ( ! class_exists( 'Sekura_Comments_Controller' ) ) {
 			return parent::get_items( $request );
 		}
 
+		public function update_item_permissions_check( $request ) {
+			$permitted = current_user_can( 'moderate_comments' );
+			return apply_filters( 'sekura/item_permissions/update', $permitted, $request, $this->type );
+		}
+
 		/**
 		 * Only expose ACF data for approved comments, or if the user can moderate.
 		 */
