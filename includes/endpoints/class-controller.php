@@ -192,17 +192,24 @@ if ( ! class_exists( 'Sekura_Controller' ) ) {
 		/**
 		 * Check read permission for the requested resource.
 		 *
-		 * Default implementation for post types: verify the post exists
-		 * and is published, or that the user can read it.
+		 * Default implementation for post types: verify the post type is
+		 * public, the post exists and is published, or the user has
+		 * permission to read it. Non-public post types that are REST-
+		 * exposed always require authentication.
 		 */
 		protected function check_read_permission( $request ) {
-			$id = absint( $request->get_param( 'id' ) );
+			$id            = absint( $request->get_param( 'id' ) );
+			$post_type_obj = get_post_type_object( $this->type );
 
-			// Collection endpoint with no specific ID — allow only for public post types.
+			// Collection endpoint with no specific ID.
 			if ( ! $id ) {
-				$post_type_obj = get_post_type_object( $this->type );
-				if ( $post_type_obj && $post_type_obj->show_in_rest ) {
+				// Public post types are intentionally open.
+				if ( $post_type_obj && $post_type_obj->public ) {
 					return true;
+				}
+				// Non-public types require edit capability.
+				if ( $post_type_obj ) {
+					return current_user_can( $post_type_obj->cap->edit_posts );
 				}
 				return false;
 			}
@@ -216,11 +223,12 @@ if ( ! class_exists( 'Sekura_Controller' ) ) {
 				);
 			}
 
-			if ( 'publish' === $post->post_status ) {
+			// Published posts on public post types are publicly readable.
+			if ( 'publish' === $post->post_status && $post_type_obj && $post_type_obj->public ) {
 				return true;
 			}
 
-			// For non-published posts, require the user to have read permission.
+			// All other cases require the user to have read permission.
 			if ( current_user_can( 'read_post', $id ) ) {
 				return true;
 			}
