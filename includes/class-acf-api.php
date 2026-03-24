@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Secrbr_ACF_API' ) ) {
-	class Secrbr_ACF_API {
+if ( ! class_exists( 'Sekura_ACF_API' ) ) {
+	class Sekura_ACF_API {
 		protected $id            = null;
 		protected $type          = null;
 		protected $controller    = null;
@@ -26,14 +26,14 @@ if ( ! class_exists( 'Secrbr_ACF_API' ) ) {
 						$this->id = 'user_' . $this->id;
 						break;
 					default:
-						if ( 'Secrbr_Terms_Controller' === $this->controller ) {
+						if ( 'Sekura_Terms_Controller' === $this->controller ) {
 							$this->id = $this->type . '_' . $this->id;
 						}
 						break;
 				}
 			}
 
-			$this->id = apply_filters( 'secrbr/id', $this->id, $this->type, $this->controller );
+			$this->id = apply_filters( 'sekura/id', $this->id, $this->type, $this->controller );
 
 			return $this->id;
 		}
@@ -105,7 +105,7 @@ if ( ! class_exists( 'Secrbr_ACF_API' ) ) {
 				$data['acf'] = array();
 			}
 
-			return apply_filters( 'secrbr/' . $this->type . '/get_fields', $data, $request );
+			return apply_filters( 'sekura/' . $this->type . '/get_fields', $data, $request );
 		}
 
 		protected function get_fields_fallback() {

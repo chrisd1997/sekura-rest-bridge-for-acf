@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Secure REST Bridge for ACF
+ * Plugin Name: Sekura REST Bridge for ACF
  * Description: Exposes Advanced Custom Fields in the WordPress REST API with proper access control.
  * Author: CW Dekker
  * Author URI: https://cwdekker.com
@@ -9,7 +9,7 @@
  * Requires PHP: 7.4
  * License: GPLv3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: secure-rest-bridge-for-acf
+ * Text Domain: sekura-rest-bridge-for-acf
  *
  * Based on ACF to REST API by Aires Goncalves (GPLv2).
  */
@@ -18,12 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SECRBR_VERSION', '1.0.0' );
-define( 'SECRBR_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SEKURA_VERSION', '1.0.0' );
+define( 'SEKURA_PATH', plugin_dir_path( __FILE__ ) );
 
-if ( ! class_exists( 'Secrbr' ) ) {
+if ( ! class_exists( 'Sekura' ) ) {
 
-	class Secrbr {
+	class Sekura {
 
 		private static $instance = null;
 
@@ -42,15 +42,15 @@ if ( ! class_exists( 'Secrbr' ) ) {
 		}
 
 		private static function includes() {
-			require_once SECRBR_PATH . 'includes/class-acf-api.php';
-			require_once SECRBR_PATH . 'includes/class-field-settings.php';
-			require_once SECRBR_PATH . 'includes/endpoints/class-controller.php';
-			require_once SECRBR_PATH . 'includes/endpoints/class-posts-controller.php';
-			require_once SECRBR_PATH . 'includes/endpoints/class-terms-controller.php';
-			require_once SECRBR_PATH . 'includes/endpoints/class-comments-controller.php';
-			require_once SECRBR_PATH . 'includes/endpoints/class-attachments-controller.php';
-			require_once SECRBR_PATH . 'includes/endpoints/class-options-controller.php';
-			require_once SECRBR_PATH . 'includes/endpoints/class-users-controller.php';
+			require_once SEKURA_PATH . 'includes/class-acf-api.php';
+			require_once SEKURA_PATH . 'includes/class-field-settings.php';
+			require_once SEKURA_PATH . 'includes/endpoints/class-controller.php';
+			require_once SEKURA_PATH . 'includes/endpoints/class-posts-controller.php';
+			require_once SEKURA_PATH . 'includes/endpoints/class-terms-controller.php';
+			require_once SEKURA_PATH . 'includes/endpoints/class-comments-controller.php';
+			require_once SEKURA_PATH . 'includes/endpoints/class-attachments-controller.php';
+			require_once SEKURA_PATH . 'includes/endpoints/class-options-controller.php';
+			require_once SEKURA_PATH . 'includes/endpoints/class-users-controller.php';
 		}
 
 		private static function hooks() {
@@ -58,31 +58,31 @@ if ( ! class_exists( 'Secrbr' ) ) {
 			$hook = $acf_version >= '5.12' ? 'rest_pre_dispatch' : 'rest_api_init';
 
 			add_action( $hook, array( __CLASS__, 'create_rest_routes' ), 10 );
-			Secrbr_Field_Settings::hooks();
+			Sekura_Field_Settings::hooks();
 		}
 
 		public static function create_rest_routes() {
 			foreach ( get_post_types( array( 'show_in_rest' => true ), 'objects' ) as $post_type ) {
 				if ( 'attachment' === $post_type->name ) {
-					$controller = new Secrbr_Attachments_Controller( $post_type );
+					$controller = new Sekura_Attachments_Controller( $post_type );
 				} else {
-					$controller = new Secrbr_Posts_Controller( $post_type );
+					$controller = new Sekura_Posts_Controller( $post_type );
 				}
 				$controller->register();
 			}
 
 			foreach ( get_taxonomies( array( 'show_in_rest' => true ), 'objects' ) as $taxonomy ) {
-				$controller = new Secrbr_Terms_Controller( $taxonomy );
+				$controller = new Sekura_Terms_Controller( $taxonomy );
 				$controller->register();
 			}
 
-			$controller = new Secrbr_Comments_Controller();
+			$controller = new Sekura_Comments_Controller();
 			$controller->register();
 
-			$controller = new Secrbr_Options_Controller();
+			$controller = new Sekura_Options_Controller();
 			$controller->register();
 
-			$controller = new Secrbr_Users_Controller();
+			$controller = new Sekura_Users_Controller();
 			$controller->register();
 		}
 
@@ -102,7 +102,7 @@ if ( ! class_exists( 'Secrbr' ) ) {
 					'<div class="notice notice-error"><p>%s</p></div>',
 					sprintf(
 						/* translators: %s: comma-separated list of missing plugins */
-						esc_html__( 'Secure REST Bridge for ACF requires the following plugins to be active: %s', 'secure-rest-bridge-for-acf' ),
+						esc_html__( 'Sekura REST Bridge for ACF requires the following plugins to be active: %s', 'sekura-rest-bridge-for-acf' ),
 						esc_html( implode( ', ', $missing ) )
 					)
 				);
@@ -110,5 +110,5 @@ if ( ! class_exists( 'Secrbr' ) ) {
 		}
 	}
 
-	add_action( 'plugins_loaded', array( 'Secrbr', 'init' ) );
+	add_action( 'plugins_loaded', array( 'Sekura', 'init' ) );
 }

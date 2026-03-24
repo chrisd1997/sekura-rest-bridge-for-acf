@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Secrbr_Options_Controller' ) ) {
-	class Secrbr_Options_Controller extends Secrbr_Controller {
+if ( ! class_exists( 'Sekura_Options_Controller' ) ) {
+	class Sekura_Options_Controller extends Sekura_Controller {
 		public function __construct() {
 			$this->type      = 'option';
 			$this->rest_base = 'options';
@@ -42,14 +42,14 @@ if ( ! class_exists( 'Secrbr_Options_Controller' ) ) {
 
 			return new WP_Error(
 				'rest_forbidden',
-				__( 'You must be an administrator to access options.', 'secure-rest-bridge-for-acf' ),
+				__( 'You must be an administrator to access options.', 'sekura-rest-bridge-for-acf' ),
 				array( 'status' => 403 )
 			);
 		}
 
 		public function update_item_permissions_check( $request ) {
 			return apply_filters(
-				'secrbr/item_permissions/update',
+				'sekura/item_permissions/update',
 				current_user_can( 'manage_options' ),
 				$request,
 				$this->type

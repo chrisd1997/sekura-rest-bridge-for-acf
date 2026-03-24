@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Secrbr_Terms_Controller' ) ) {
-	class Secrbr_Terms_Controller extends Secrbr_Controller {
+if ( ! class_exists( 'Sekura_Terms_Controller' ) ) {
+	class Sekura_Terms_Controller extends Sekura_Controller {
 		public function __construct( $type ) {
 			$this->type      = $type->name;
 			$this->rest_base = ! empty( $type->rest_base ) ? $type->rest_base : $type->name;
@@ -33,7 +33,7 @@ if ( ! class_exists( 'Secrbr_Terms_Controller' ) ) {
 
 			return new WP_Error(
 				'rest_forbidden',
-				__( 'You do not have permission to access this resource.', 'secure-rest-bridge-for-acf' ),
+				__( 'You do not have permission to access this resource.', 'sekura-rest-bridge-for-acf' ),
 				array( 'status' => 403 )
 			);
 		}

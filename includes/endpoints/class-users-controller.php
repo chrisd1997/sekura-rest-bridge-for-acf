@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Secrbr_Users_Controller' ) ) {
-	class Secrbr_Users_Controller extends Secrbr_Controller {
+if ( ! class_exists( 'Sekura_Users_Controller' ) ) {
+	class Sekura_Users_Controller extends Sekura_Controller {
 		public function __construct() {
 			$this->type      = 'user';
 			$this->rest_base = 'users';
@@ -32,7 +32,7 @@ if ( ! class_exists( 'Secrbr_Users_Controller' ) ) {
 
 				return new WP_Error(
 					'rest_forbidden',
-					__( 'You do not have permission to list user fields.', 'secure-rest-bridge-for-acf' ),
+					__( 'You do not have permission to list user fields.', 'sekura-rest-bridge-for-acf' ),
 					array( 'status' => 403 )
 				);
 			}
@@ -49,7 +49,7 @@ if ( ! class_exists( 'Secrbr_Users_Controller' ) ) {
 
 			return new WP_Error(
 				'rest_forbidden',
-				__( 'You do not have permission to access this user\'s fields.', 'secure-rest-bridge-for-acf' ),
+				__( 'You do not have permission to access this user\'s fields.', 'sekura-rest-bridge-for-acf' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -64,7 +64,7 @@ if ( ! class_exists( 'Secrbr_Users_Controller' ) ) {
 				$permitted = current_user_can( 'edit_users' );
 			}
 
-			return apply_filters( 'secrbr/item_permissions/update', $permitted, $request, $this->type );
+			return apply_filters( 'sekura/item_permissions/update', $permitted, $request, $this->type );
 		}
 	}
 }

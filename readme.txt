@@ -1,4 +1,4 @@
-=== Secure REST Bridge for ACF ===
+=== Sekura REST Bridge for ACF ===
 Contributors: cwdekker
 Tags: acf, rest-api, custom-fields, json, wp-api
 Requires at least: 5.0
@@ -12,7 +12,7 @@ Expose Advanced Custom Fields in the WordPress REST API with proper access contr
 
 == Description ==
 
-Secure REST Bridge for ACF securely exposes Advanced Custom Fields in the WordPress REST API. Based on [ACF to REST API](https://github.com/airesvsg/acf-to-rest-api) by Aires Goncalves, rebuilt with security as a first-class concern.
+Sekura REST Bridge for ACF securely exposes Advanced Custom Fields in the WordPress REST API. Based on [ACF to REST API](https://github.com/airesvsg/acf-to-rest-api) by Aires Goncalves, rebuilt with security as a first-class concern.
 
 The original ACF to REST API plugin exposes all ACF field data to unauthenticated requests, including options pages (which often contain API keys and secrets), user profile fields, and fields on private/draft posts. This plugin fixes that with proper WordPress capability checks on every endpoint.
 
@@ -37,7 +37,7 @@ ACF data is also appended as an `acf` key on standard WP REST API responses.
 
 == Installation ==
 
-1. Upload the `secure-rest-bridge-for-acf` folder to `/wp-content/plugins/`
+1. Upload the `sekura-rest-bridge-for-acf` folder to `/wp-content/plugins/`
 2. Activate the plugin through the Plugins menu in WordPress
 3. Ensure Advanced Custom Fields is installed and active
 
@@ -45,7 +45,7 @@ ACF data is also appended as an `acf` key on standard WP REST API responses.
 
 = Does this work with ACF Pro? =
 
-Yes. Secure REST Bridge for ACF works alongside ACF Pro's native REST support and overrides it to provide consistent access control.
+Yes. Sekura REST Bridge for ACF works alongside ACF Pro's native REST support and overrides it to provide consistent access control.
 
 = Is this a drop-in replacement for ACF to REST API? =
 

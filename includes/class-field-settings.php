@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'Secrbr_Field_Settings' ) ) {
-	class Secrbr_Field_Settings {
+if ( ! class_exists( 'Sekura_Field_Settings' ) ) {
+	class Sekura_Field_Settings {
 		private function __construct() {}
 
 		public static function hooks() {
@@ -24,8 +24,8 @@ if ( ! class_exists( 'Secrbr_Field_Settings' ) ) {
 		private static function show_in_rest( $field ) {
 			if ( function_exists( 'acf_render_field_setting' ) ) {
 				acf_render_field_setting( $field, array(
-					'label'         => __( 'Show in REST API?', 'secure-rest-bridge-for-acf' ),
-					'instructions'  => __( 'Allow this field to be read via the REST API.', 'secure-rest-bridge-for-acf' ),
+					'label'         => __( 'Show in REST API?', 'sekura-rest-bridge-for-acf' ),
+					'instructions'  => __( 'Allow this field to be read via the REST API.', 'sekura-rest-bridge-for-acf' ),
 					'type'          => 'true_false',
 					'name'          => 'show_in_rest',
 					'ui'            => 1,
@@ -38,8 +38,8 @@ if ( ! class_exists( 'Secrbr_Field_Settings' ) ) {
 		private static function edit_in_rest( $field ) {
 			if ( function_exists( 'acf_render_field_setting' ) ) {
 				acf_render_field_setting( $field, array(
-					'label'         => __( 'Edit in REST API?', 'secure-rest-bridge-for-acf' ),
-					'instructions'  => __( 'Allow this field to be updated via the REST API.', 'secure-rest-bridge-for-acf' ),
+					'label'         => __( 'Edit in REST API?', 'sekura-rest-bridge-for-acf' ),
+					'instructions'  => __( 'Allow this field to be updated via the REST API.', 'sekura-rest-bridge-for-acf' ),
 					'type'          => 'true_false',
 					'name'          => 'edit_in_rest',
 					'ui'            => 1,
